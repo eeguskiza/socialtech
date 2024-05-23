@@ -40,6 +40,7 @@ socialtech/
 │   └── ros_scripts.py
 ├── README.md
 └── requirements.txt
+```
 
 ## Instalación
 
