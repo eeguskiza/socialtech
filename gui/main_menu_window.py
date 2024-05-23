@@ -1,5 +1,6 @@
-from PyQt5.QtWidgets import QMainWindow, QLabel, QVBoxLayout, QWidget, QHBoxLayout, QListWidget, QListWidgetItem, QStackedWidget, QSpacerItem, QSizePolicy
+from PyQt5.QtWidgets import QMainWindow, QLabel, QVBoxLayout, QWidget, QHBoxLayout, QListWidget, QListWidgetItem, QStackedWidget, QSpacerItem, QSizePolicy, QPushButton
 from PyQt5.QtCore import Qt
+from gui.default_routes_window import DefaultRoutesWindow
 
 class MainMenuWindow(QMainWindow):
     def __init__(self):
@@ -48,12 +49,33 @@ class MainMenuWindow(QMainWindow):
 
         # Stack for different pages
         self.stack = QStackedWidget(self)
-        for i in range(1, 7):
+        self.option_messages = [
+            "Estas son las rutas disponibles para su selección.",
+            "Aquí puedes crear tu propia ruta personalizada.",
+            "Visualiza los cuadros de mando y estadísticas.",
+            "Accede al mapa interactivo.",
+            "Cierra la sesión actual y vuelve a la pantalla de inicio de sesión.",
+            "Ajusta las configuraciones de la aplicación."
+        ]
+        
+        for i, message in enumerate(self.option_messages):
             page = QWidget()
             layout = QVBoxLayout(page)
-            label = QLabel(f"Opción - {i}", self)
+            label = QLabel(f"Opción - {i + 1}", self)
             label.setAlignment(Qt.AlignCenter)
             layout.addWidget(label)
+
+            # Add introductory message
+            intro_message = QLabel(message, self)
+            intro_message.setAlignment(Qt.AlignCenter)
+            layout.addWidget(intro_message)
+
+            # Add "¡Vamos!" button
+            vamos_button = QPushButton("¡Vamos!", self)
+            vamos_button.setFixedSize(100, 50)
+            vamos_button.clicked.connect(lambda _, i=i: self.navigate_to_option(i + 1))
+            layout.addWidget(vamos_button, alignment=Qt.AlignCenter)
+
             self.stack.addWidget(page)
 
         # Add sidebar and stack to main layout
@@ -62,3 +84,11 @@ class MainMenuWindow(QMainWindow):
 
     def display_content(self, index):
         self.stack.setCurrentIndex(index)
+
+    def navigate_to_option(self, option_index):
+        if option_index == 1:
+            self.default_routes_window = DefaultRoutesWindow()
+            self.default_routes_window.show()
+        else:
+            print(f"Redirigiendo a la ventana para Opción - {option_index}")
+            # Aquí puedes añadir la lógica para abrir la nueva ventana correspondiente a la opción seleccionada
