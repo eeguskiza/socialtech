@@ -87,7 +87,7 @@ class MainMenuWindow(QMainWindow):
         current_item = self.sidebar_list.currentItem()
         if current_item:
             selected_option = current_item.text()
-            self.option_label.setText(f"SOCIALTECH - {selected_option.upper()}")
+            self.option_label.setText(f"Opción - {index + 1}")
             if selected_option == "Rutas predeterminadas":
                 self.intro_message.setText("Estas son las rutas disponibles para su selección.")
                 self.vamos_button.setProperty("option", "rutas_predeterminadas")
@@ -118,6 +118,10 @@ class MainMenuWindow(QMainWindow):
         if selected_option == "rutas_predeterminadas":
             self.default_routes_window = DefaultRoutesWindow()
             self.default_routes_window.show()
+        elif selected_option == "crea_tu_ruta":
+            from gui.custom_route_window import CustomRouteWindow
+            self.custom_route_window = CustomRouteWindow()
+            self.custom_route_window.show()
         elif selected_option == "cerrar_sesion":
             print("Cerrando sesión")
             from gui.login_window import LoginWindow  # Importar aquí para evitar dependencias circulares
