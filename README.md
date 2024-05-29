@@ -1,6 +1,6 @@
 # SocialTech Challenge - Universidad de Deusto
 
-![Universidad de Deusto](assets/university_logo.png)
+![Universidad de Deusto](assets/deusto-logo.png)
 
 ## Introducción
 
@@ -51,18 +51,42 @@ socialtech/
 - PyQt5
 - SQLite3
 
+### Instalación de Dependencias
+
+```bash
+sudo apt update
+sudo apt upgrade -y
+sudo apt install -y python3 python3-venv python3-pip git sqlite3
+sudo apt install -y ros-noetic-desktop-full
+```
 ### Clonar el Repositorio
 
 ```bash
 git clone https://github.com/username/socialtech-challenge.git
 cd socialtech-challenge
+```
 
-python -m venv venv
-source venv/bin/activate  # En Windows usa `venv\Scripts\activate`
+### Crear un Entorno Virtual
 
+```bash
+python3 -m venv venv
+source venv/bin/activate  # Para desactivar el entorno, usa `deactivate`
+```
+
+### Instalar Dependencias
+
+```bash
 pip install -r requirements.txt
+```
 
+### Crear la Base de Datos
+
+```bash
 python database/create_db.py
+```
 
+### Ejecución
+
+```bash
 python main.py
 ```
