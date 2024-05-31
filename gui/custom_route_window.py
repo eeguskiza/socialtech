@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QMainWindow, QLabel, QVBoxLayout, QWidget, QHBoxLayout, QPushButton, QMessageBox
 from PyQt5.QtCore import Qt
+from utils import center_window
 
 class CustomRouteWindow(QMainWindow):
     def __init__(self):
@@ -7,6 +8,7 @@ class CustomRouteWindow(QMainWindow):
 
         self.setWindowTitle("Socialtech - Crear tu Ruta")
         self.setGeometry(100, 100, 1024, 600)
+        center_window(self)
 
         # Inicializar la lista de coordenadas
         self.coordinates = []

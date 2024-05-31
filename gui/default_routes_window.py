@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import QMainWindow, QWidget, QGridLayout
 from PyQt5.QtCore import Qt
 import threading
 import scripts.ros_routes as ros_routes
+from utils import center_window
 
 class DefaultRoutesWindow(QMainWindow):
     def __init__(self):
@@ -9,6 +10,7 @@ class DefaultRoutesWindow(QMainWindow):
 
         self.setWindowTitle("Socialtech - Rutas Disponibles")
         self.setGeometry(100, 100, 1024, 600)
+        center_window(self)
 
         # Main widget
         self.central_widget = QWidget(self)

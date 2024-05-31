@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QMainWindow, QPushButton, QLabel, QLineEdit, QVBoxLayout, QWidget, QHBoxLayout, QSpacerItem, QSizePolicy, QMessageBox
 from PyQt5.QtCore import Qt
 import sqlite3
+from utils import center_window
 
 class RegisterWindow(QMainWindow):
     def __init__(self):
@@ -8,6 +9,7 @@ class RegisterWindow(QMainWindow):
 
         self.setWindowTitle("Socialtech - Register")
         self.setGeometry(100, 100, 1024, 600)
+        center_window(self)
 
         # Main widget
         self.central_widget = QWidget(self)

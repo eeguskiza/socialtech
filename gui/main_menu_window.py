@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QMainWindow, QLabel, QVBoxLayout, QWidget, QHBoxLayout, QListWidget, QListWidgetItem, QStackedWidget, QSpacerItem, QSizePolicy, QPushButton, QComboBox
 from PyQt5.QtCore import Qt
 from gui.default_routes_window import DefaultRoutesWindow
+from utils import center_window
 
 class MainMenuWindow(QMainWindow):
     def __init__(self):
@@ -8,6 +9,7 @@ class MainMenuWindow(QMainWindow):
 
         self.setWindowTitle("Socialtech - Main Menu")
         self.setGeometry(100, 100, 1024, 600)
+        center_window(self)
 
         # Main widget
         self.central_widget = QWidget(self)

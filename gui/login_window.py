@@ -5,6 +5,8 @@ import os
 import sqlite3
 from gui.register_window import RegisterWindow
 from gui.main_menu_window import MainMenuWindow
+from gui.virtual_keyboard import VirtualKeyboard  # Importar el teclado virtual
+from utils import center_window
 
 class LoginWindow(QMainWindow):
     def __init__(self):
@@ -12,6 +14,7 @@ class LoginWindow(QMainWindow):
 
         self.setWindowTitle("Socialtech - Login")
         self.setGeometry(100, 100, 1024, 600)
+        center_window(self)
 
         # Main widget
         self.central_widget = QWidget(self)
@@ -35,6 +38,7 @@ class LoginWindow(QMainWindow):
         self.username_input = QLineEdit(self)
         self.username_input.setStyleSheet("font-size: 14pt")
         self.username_input.setFixedWidth(200)
+        self.username_input.mousePressEvent = lambda event: self.show_keyboard(self.username_input)  # Conectar al evento de clic
         self.left_layout.addWidget(self.username_input, alignment=Qt.AlignCenter)
 
         # Add password input
@@ -46,6 +50,7 @@ class LoginWindow(QMainWindow):
         self.password_input.setEchoMode(QLineEdit.Password)
         self.password_input.setStyleSheet("font-size: 14pt")
         self.password_input.setFixedWidth(200)
+        self.password_input.mousePressEvent = lambda event: self.show_keyboard(self.password_input)  # Conectar al evento de clic
         self.left_layout.addWidget(self.password_input, alignment=Qt.AlignCenter)
 
         # Add buttons
@@ -119,3 +124,7 @@ class LoginWindow(QMainWindow):
         self.main_menu_window = MainMenuWindow()
         self.main_menu_window.show()
         self.close()
+
+    def show_keyboard(self, input_field):
+        self.keyboard = VirtualKeyboard(input_field)
+        self.keyboard.exec_()

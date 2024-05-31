@@ -3,6 +3,7 @@ from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
 import os
 from gui.login_window import LoginWindow
+from utils import center_window
 
 class WelcomeWindow(QMainWindow):
     def __init__(self):
@@ -10,6 +11,7 @@ class WelcomeWindow(QMainWindow):
 
         self.setWindowTitle("Socialtech - Welcome")
         self.setGeometry(100, 100, 1024, 600)
+        center_window(self)
 
         # Set background image
         self.label = QLabel(self)
