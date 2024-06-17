@@ -1,7 +1,12 @@
 from PyQt5.QtWidgets import QMainWindow, QPushButton, QLabel, QLineEdit, QVBoxLayout, QWidget, QHBoxLayout, QSpacerItem, QSizePolicy, QMessageBox
+from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
+import os
+import sqlite3
 from utils import center_window
-from .virtual_keyboard import VirtualKeyboard  # Asegúrate de que este import esté correcto
+from .virtual_keyboard import VirtualKeyboard
+from .main_menu_window import MainMenuWindow  
+from .register_window import RegisterWindow  
 
 class LoginWindow(QMainWindow):
     def __init__(self):

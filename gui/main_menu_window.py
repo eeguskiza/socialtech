@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QMainWindow, QLabel, QVBoxLayout, QWidget, QHBoxLayout, QListWidget, QListWidgetItem, QStackedWidget, QSpacerItem, QSizePolicy, QPushButton, QComboBox
 from PyQt5.QtCore import Qt
-from gui.default_routes_window import DefaultRoutesWindow
+from .default_routes_window import DefaultRoutesWindow
+from .custom_route_window import CustomRouteWindow
 from utils import center_window
 
 class MainMenuWindow(QMainWindow):

@@ -1,4 +1,4 @@
-'''
+
 import rospy
 import actionlib
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
@@ -74,4 +74,3 @@ def follow_route(route_number):
             print("Checkpoint alcanzado")
 
     rospy.loginfo("Ruta completada.")
-'''
