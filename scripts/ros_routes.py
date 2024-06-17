@@ -1,4 +1,3 @@
-
 import rospy
 import actionlib
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
@@ -58,8 +57,7 @@ def follow_route(route_number):
     # Obtiene la ruta correspondiente
     route = routes[route_number]
 
-    # Inicializa el nodo ROS y el cliente de acción
-    rospy.init_node('route_follower', anonymous=True)
+    # Inicializa el cliente de acción
     client = actionlib.SimpleActionClient('move_base', MoveBaseAction)
     client.wait_for_server()
 

@@ -1,8 +1,8 @@
 from PyQt5.QtWidgets import QMainWindow, QWidget, QGridLayout
 from PyQt5.QtCore import Qt
-import threading
-import scripts.ros_routes as ros_routes
+from scripts.ros_thread import RosThread
 from utils import center_window
+import scripts.ros_routes as ros_routes
 
 class DefaultRoutesWindow(QMainWindow):
     def __init__(self):
@@ -30,4 +30,5 @@ class DefaultRoutesWindow(QMainWindow):
         
     def start_route(self, route_index):
         print(f"Iniciando ruta {route_index}")
-        threading.Thread(target=ros_routes.follow_route, args=(route_index,)).start()
+        self.ros_thread = RosThread(ros_routes.follow_route, route_index)
+        self.ros_thread.start()

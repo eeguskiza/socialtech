@@ -1,4 +1,3 @@
-import rospy
 from PyQt5.QtCore import QThread
 
 class RosThread(QThread):
