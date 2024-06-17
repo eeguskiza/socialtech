@@ -1,12 +1,7 @@
 from PyQt5.QtWidgets import QMainWindow, QPushButton, QLabel, QLineEdit, QVBoxLayout, QWidget, QHBoxLayout, QSpacerItem, QSizePolicy, QMessageBox
-from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
-import os
-import sqlite3
-from gui.register_window import RegisterWindow
-from gui.main_menu_window import MainMenuWindow
-from gui.virtual_keyboard import VirtualKeyboard  # Importar el teclado virtual
 from utils import center_window
+from .virtual_keyboard import VirtualKeyboard  # Asegúrate de que este import esté correcto
 
 class LoginWindow(QMainWindow):
     def __init__(self):
@@ -38,7 +33,6 @@ class LoginWindow(QMainWindow):
         self.username_input = QLineEdit(self)
         self.username_input.setStyleSheet("font-size: 14pt")
         self.username_input.setFixedWidth(200)
-        self.username_input.mousePressEvent = lambda event: self.show_keyboard(self.username_input)  # Conectar al evento de clic
         self.left_layout.addWidget(self.username_input, alignment=Qt.AlignCenter)
 
         # Add password input
@@ -50,7 +44,6 @@ class LoginWindow(QMainWindow):
         self.password_input.setEchoMode(QLineEdit.Password)
         self.password_input.setStyleSheet("font-size: 14pt")
         self.password_input.setFixedWidth(200)
-        self.password_input.mousePressEvent = lambda event: self.show_keyboard(self.password_input)  # Conectar al evento de clic
         self.left_layout.addWidget(self.password_input, alignment=Qt.AlignCenter)
 
         # Add buttons
@@ -91,6 +84,10 @@ class LoginWindow(QMainWindow):
         self.main_layout.addLayout(self.left_layout)
         self.main_layout.addLayout(self.right_layout)
 
+        # Conectar eventos de clic a los campos de entrada
+        self.username_input.mousePressEvent = lambda event: self.show_keyboard(self.username_input)
+        self.password_input.mousePressEvent = lambda event: self.show_keyboard(self.password_input)
+
     def login(self):
         username = self.username_input.text()
         password = self.password_input.text()
@@ -127,4 +124,4 @@ class LoginWindow(QMainWindow):
 
     def show_keyboard(self, input_field):
         self.keyboard = VirtualKeyboard(input_field)
-        self.keyboard.exec_()
+        self.keyboard.show()

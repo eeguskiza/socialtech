@@ -1,79 +1,56 @@
-from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QPushButton, QLineEdit, QGridLayout
+from PyQt5.QtWidgets import QWidget, QGridLayout, QPushButton, QLineEdit, QVBoxLayout, QHBoxLayout
 from PyQt5.QtCore import Qt
 
-class VirtualKeyboard(QDialog):
+class VirtualKeyboard(QWidget):
     def __init__(self, input_field):
         super().__init__()
         self.input_field = input_field
-        self.setWindowTitle("Teclado Virtual")
-        self.setGeometry(100, 100, 1024, 600)
+        self.init_ui()
 
+    def init_ui(self):
+        self.setWindowTitle("Virtual Keyboard")
+        self.setGeometry(100, 100, 600, 300)
         
-        # Centro la ventana en la pantalla
-        self.center()
-
+        # Main layout
         layout = QVBoxLayout()
 
-        # Campo de texto para mostrar lo que se está escribiendo
-        self.display_field = QLineEdit(self)
-        self.display_field.setReadOnly(True)
-        self.display_field.setText(input_field.text())
-        layout.addWidget(self.display_field)
+        # Input field display
+        self.display = QLineEdit(self)
+        self.display.setReadOnly(True)
+        layout.addWidget(self.display)
+        
+        # Keyboard layout
+        grid_layout = QGridLayout()
+        keys = [             ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],             ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],             ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],             ['z', 'x', 'c', 'v', 'b', 'n', 'm']         ]
 
-        keys_layout = QGridLayout()
-        keys = [
-            ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
-            ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
-            ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
-            ['z', 'x', 'c', 'v', 'b', 'n', 'm']
-        ]
+        positions = [(i, j) for i in range(5) for j in range(10)]
+        
+        for position, key in zip(positions, buttons):
+            button = QPushButton(key)
+            button.clicked.connect(lambda _, k=key: self.key_pressed(k))
+            grid_layout.addWidget(button, *position)
 
-        for i, row in enumerate(keys):
-            for j, key in enumerate(row):
-                button = QPushButton(key)
-                button.setFixedSize(60, 60)
-                button.clicked.connect(lambda _, k=key: self.key_pressed(k))
-                keys_layout.addWidget(button, i, j)
-
-        layout.addLayout(keys_layout)
-
-        control_layout = QHBoxLayout()
-        space_button = QPushButton('Space')
-        space_button.setFixedSize(460, 60)
-        space_button.clicked.connect(self.space_pressed)
-        control_layout.addWidget(space_button)
-
-        backspace_button = QPushButton('Backspace')
-        backspace_button.setFixedSize(120, 60)
-        backspace_button.clicked.connect(self.backspace_pressed)
-        control_layout.addWidget(backspace_button)
-
-        enter_button = QPushButton('Enter')
-        enter_button.setFixedSize(120, 60)
-        enter_button.clicked.connect(self.enter_pressed)
-        control_layout.addWidget(enter_button)
-
-        layout.addLayout(control_layout)
-
+        layout.addLayout(grid_layout)
         self.setLayout(layout)
+        self.center()
 
     def key_pressed(self, key):
-        self.display_field.setText(self.display_field.text() + key)
-        self.input_field.setText(self.display_field.text())
-
-    def space_pressed(self):
-        self.display_field.setText(self.display_field.text() + ' ')
-        self.input_field.setText(self.display_field.text())
-
-    def backspace_pressed(self):
-        self.display_field.setText(self.display_field.text()[:-1])
-        self.input_field.setText(self.display_field.text())
-
-    def enter_pressed(self):
-        self.accept()
+        if key == 'Space':
+            self.input_field.setText(self.input_field.text() + ' ')
+            self.display.setText(self.display.text() + ' ')
+        elif key == 'Backspace':
+            self.input_field.setText(self.input_field.text()[:-1])
+            self.display.setText(self.display.text()[:-1])
+        elif key == 'Enter':
+            self.input_field.setText(self.display.text())
+            self.close()
+        else:
+            self.input_field.setText(self.input_field.text() + key)
+            self.display.setText(self.display.text() + key)
 
     def center(self):
-        qr = self.frameGeometry()
-        cp = self.screen().availableGeometry().center()
-        qr.moveCenter(cp)
-        self.move(qr.topLeft())
+        screen_geometry = self.screen().availableGeometry()
+        cp = screen_geometry.center()
+        frame_geometry = self.frameGeometry()
+        frame_geometry.moveCenter(cp)
+        self.move(frame_geometry.topLeft())
