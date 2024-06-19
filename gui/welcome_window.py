@@ -21,14 +21,14 @@ class WelcomeWindow(QMainWindow):
 
         # Add the first logo
         self.logo1 = QLabel(self)
-        self.logo1.setGeometry(50, 50, 200, 100)  # Adjust size and position as needed
-        pixmap1 = QPixmap(os.path.join(os.path.dirname(__file__), '../assets/deuto-logo.png'))
+        self.logo1.setGeometry(50, -200, 688, 688)  # Adjust size and position as needed
+        pixmap1 = QPixmap(os.path.join(os.path.dirname(__file__), '../assets/login.png'))
         self.logo1.setPixmap(pixmap1)
         self.logo1.setScaledContents(True)
 
         # Add the second logo
         self.logo2 = QLabel(self)
-        self.logo2.setGeometry(774, 50, 200, 100)  # Adjust size and position as needed
+        self.logo2.setGeometry(774, 50, 200, 200)  # Adjust size and position as needed
         pixmap2 = QPixmap(os.path.join(os.path.dirname(__file__), '../assets/socialtech.png'))
         self.logo2.setPixmap(pixmap2)
         self.logo2.setScaledContents(True)
