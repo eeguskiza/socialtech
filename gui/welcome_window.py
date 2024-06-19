@@ -19,6 +19,20 @@ class WelcomeWindow(QMainWindow):
         self.label.setStyleSheet("background-color: #2C3E50")  # Darker blue color
         self.label.setScaledContents(True)
 
+        # Add the first logo
+        self.logo1 = QLabel(self)
+        self.logo1.setGeometry(50, 50, 200, 100)  # Adjust size and position as needed
+        pixmap1 = QPixmap(os.path.join(os.path.dirname(__file__), '../assets/deuto-logo.png'))
+        self.logo1.setPixmap(pixmap1)
+        self.logo1.setScaledContents(True)
+
+        # Add the second logo
+        self.logo2 = QLabel(self)
+        self.logo2.setGeometry(774, 50, 200, 100)  # Adjust size and position as needed
+        pixmap2 = QPixmap(os.path.join(os.path.dirname(__file__), '../assets/socialtech.png'))
+        self.logo2.setPixmap(pixmap2)
+        self.logo2.setScaledContents(True)
+
         # Add start button with larger size and bold text
         self.start_button = QPushButton("Comenzar", self)
         self.start_button.setStyleSheet("font: bold 24pt; height: 80px; width: 300px;")
