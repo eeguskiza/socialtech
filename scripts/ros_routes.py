@@ -40,23 +40,11 @@ def follow_route(route_number):
         [2.3474786281585693, 3.251986265182495, 1.57, True],
         [2.2932260036468506, 5.3571977615356445, 1.57, True]
     ]
-    route_3 = [
-        [4.0, 4.0, 0, True],
-        [5.0, 5.0, 0, True],
-        [6.0, 6.0, 0, True]
-    ]
-    route_4 = [
-        [7.0, 7.0, 0, True],
-        [8.0, 8.0, 0, True],
-        [9.0, 9.0, 0, True]
-    ]
 
     # Mapa de rutas
     routes = {
         1: route_1,
         2: route_2,
-        3: route_3,
-        4: route_4
     }
 
     # Verifica que el número de ruta sea válido

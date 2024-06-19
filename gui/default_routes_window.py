@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QMainWindow, QWidget, QGridLayout
+from PyQt5.QtWidgets import QMainWindow, QWidget, QGridLayout, QLabel
 from PyQt5.QtCore import Qt
 from scripts.ros_thread import RosThread
 from utils import center_window
@@ -19,12 +19,16 @@ class DefaultRoutesWindow(QMainWindow):
         # Main layout
         self.main_layout = QGridLayout(self.central_widget)
         
-        # Paneles para las rutas
-        colors = ["#FF5733", "#33FF57", "#3357FF", "#FF33A5"]
+        # Paneles para las rutas con nombres
+        routes_info = [
+            {"color": "#FF5733", "name": "Ordenada 0-6"},
+            {"color": "#33FF57", "name": "Inversa 6-0"}
+        ]
         
-        for i in range(4):
-            route_panel = QWidget(self)
-            route_panel.setStyleSheet(f"background-color: {colors[i]};")
+        for i, info in enumerate(routes_info):
+            route_panel = QLabel(info["name"], self)
+            route_panel.setStyleSheet(f"background-color: {info['color']}; font-size: 20pt; font-weight: bold; color: white;")
+            route_panel.setAlignment(Qt.AlignCenter)
             route_panel.mousePressEvent = lambda event, idx=i: self.start_route(idx + 1)
             self.main_layout.addWidget(route_panel, i // 2, i % 2)
         

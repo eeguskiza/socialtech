@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QMainWindow, QLabel, QVBoxLayout, QWidget, QHBoxLayout, QPushButton, QMessageBox
 from PyQt5.QtCore import Qt
+import threading
 from utils import center_window
 
 class CustomRouteWindow(QMainWindow):
@@ -42,8 +43,15 @@ class CustomRouteWindow(QMainWindow):
         self.main_layout.addWidget(self.confirm_button, alignment=Qt.AlignCenter)
 
     def add_coordinate(self, point_index):
+        # Aquí deberías añadir la lógica para obtener las coordenadas (x, y, rz) y si hay una parada (stop)
+        # Por simplicidad, estamos usando valores de ejemplo
+        x = float(input(f"Introduzca la coordenada x para el punto {point_index + 1}: "))
+        y = float(input(f"Introduzca la coordenada y para el punto {point_index + 1}: "))
+        rz = float(input(f"Introduzca la orientación (rz) para el punto {point_index + 1}: "))
+        stop = input(f"¿El punto {point_index + 1} es una parada? (s/n): ").lower() == 's'
+        
         # Agregar la coordenada seleccionada a la lista
-        self.coordinates.append([point_index * 10, point_index * 10])  # Coordenadas de ejemplo
+        self.coordinates.append([x, y, rz, stop])
         self.buttons[point_index].setEnabled(False)  # Deshabilitar el botón seleccionado
 
     def confirm_route(self):
@@ -56,11 +64,14 @@ class CustomRouteWindow(QMainWindow):
                                      QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
 
         if reply == QMessageBox.Yes:
-            # Llamar al script de ROS para ejecutar la ruta
-            import scripts.execute_route as execute_route
-            execute_route.execute_custom_route(self.coordinates)
+            # Llamar al script de ROS para ejecutar la ruta en un hilo separado
+            threading.Thread(target=self.execute_custom_route).start()
         else:
             # Reiniciar la selección de la ruta
             self.coordinates = []
             for btn in self.buttons:
                 btn.setEnabled(True)
+
+    def execute_custom_route(self):
+        import scripts.ros_routes as ros_routes
+        ros_routes.execute_custom_route(self.coordinates)
