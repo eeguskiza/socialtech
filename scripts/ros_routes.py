@@ -13,7 +13,11 @@ def move_to_goal(client, x, y, rz):
     goal.target_pose.pose.position.y = y
     quaternion = quaternion_from_euler(0, 0, rz)
     goal.target_pose.pose.orientation = Quaternion(*quaternion)
+<<<<<<< HEAD
     
+=======
+   
+>>>>>>> 10f15e01ecf7e6bdece88fedf66316b93073fd5d
     client.send_goal(goal)
     client.wait_for_result()
 
@@ -21,7 +25,11 @@ def move_to_goal(client, x, y, rz):
 
 def follow_route(route_number):
     # Define las rutas con listas de coordenadas
+<<<<<<< HEAD
     	# [x, y, Rz, parada]
+=======
+    # [x, y, Rz, parada]
+>>>>>>> 10f15e01ecf7e6bdece88fedf66316b93073fd5d
     route_1 = [
         [-1.829587459564209, -0.4259052276611328, 0, False],
         [-2.416154146194458, -4.989470481872559, 1,57, True],
@@ -30,6 +38,7 @@ def follow_route(route_number):
         [-10.311999320983887, -9.096759796142578, 0, True]
     ]
     route_2 = [
+<<<<<<< HEAD
         [4.9833249435424805, 1.7367496490478516, 1.5088913, False],
         [4.9973249435424805, 2.418184518814087, 1.5088913, False],
         [4.6632080078125, 5.1052398681640625, 0, True],
@@ -39,6 +48,11 @@ def follow_route(route_number):
         [1.0465073585510254, 0.12032222747802734, 4.71, True],
         [2.3474786281585693, 3.251986265182495, 1.57, True],
         [2.2932260036468506, 5.3571977615356445, 1.57, True]
+=======
+        [1.0, 1.0, 0, True],
+        [2.0, 2.0, 0, True],
+        [3.0, 3.0, 0, True]
+>>>>>>> 10f15e01ecf7e6bdece88fedf66316b93073fd5d
     ]
     route_3 = [
         [4.0, 4.0, 0, True],
@@ -82,6 +96,12 @@ def follow_route(route_number):
             print("Checkpoint alcanzado")
             # para usar puntos intermedios y que no haga paradas en esos puntos
             if point[3]:
+<<<<<<< HEAD
             	time.sleep(5)
     
 rospy.loginfo("Ruta completada.")
+=======
+                time.sleep(5)
+
+    rospy.loginfo("Ruta completada.")
+>>>>>>> 10f15e01ecf7e6bdece88fedf66316b93073fd5d
