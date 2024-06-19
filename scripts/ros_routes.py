@@ -1,15 +1,19 @@
 import rospy
 import actionlib
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
+from geometry_msgs.msg import Quaternion
+from tf.transformations import quaternion_from_euler
+import time
 
-def move_to_goal(client, x, y):
+def move_to_goal(client, x, y, rz):
     goal = MoveBaseGoal()
     goal.target_pose.header.frame_id = "map"
     goal.target_pose.header.stamp = rospy.Time.now()
     goal.target_pose.pose.position.x = x
     goal.target_pose.pose.position.y = y
-    goal.target_pose.pose.orientation.w = 1.0
-
+    quaternion = quaternion_from_euler(0, 0, rz)
+    goal.target_pose.pose.orientation = Quaternion(*quaternion)
+    
     client.send_goal(goal)
     client.wait_for_result()
 
@@ -17,28 +21,34 @@ def move_to_goal(client, x, y):
 
 def follow_route(route_number):
     # Define las rutas con listas de coordenadas
+    	# [x, y, Rz, parada]
     route_1 = [
-        [156.11671447753906, 53.39218521118164],
-        [155.8867645263672, 49.3564453125],
-        [151.76332092285156, 46.81568908691406],
-        [155.70179748535156, 41.81671905517578],
-        [159.77371215820312, 35.37627410888672],
-        [154.77906799316406, 33.564361572265625]
+        [-1.829587459564209, -0.4259052276611328, 0, False],
+        [-2.416154146194458, -4.989470481872559, 1,57, True],
+        [-0.9932656288146973, -9.363847732543945, 0, True],
+        [-5.4887895584106445, -9.122173309326172, 3.14, True],
+        [-10.311999320983887, -9.096759796142578, 0, True]
     ]
     route_2 = [
-        [1.0, 1.0],
-        [2.0, 2.0],
-        [3.0, 3.0]
+        [4.9833249435424805, 1.7367496490478516, 1.5088913, False],
+        [4.9973249435424805, 2.418184518814087, 1.5088913, False],
+        [4.6632080078125, 5.1052398681640625, 0, True],
+        [4.981709003448486, 5.024297714233398, 4.6488913, False],
+        [5.081701755523682, 4.287018775939941, 4.6488913, False],
+        [4.250373840332031, 0.10336160659790039, 3.14, True],
+        [1.0465073585510254, 0.12032222747802734, 4.71, True],
+        [2.3474786281585693, 3.251986265182495, 1.57, True],
+        [2.2932260036468506, 5.3571977615356445, 1.57, True]
     ]
     route_3 = [
-        [4.0, 4.0],
-        [5.0, 5.0],
-        [6.0, 6.0]
+        [4.0, 4.0, 0, True],
+        [5.0, 5.0, 0, True],
+        [6.0, 6.0, 0, True]
     ]
     route_4 = [
-        [7.0, 7.0],
-        [8.0, 8.0],
-        [9.0, 9.0]
+        [7.0, 7.0, 0, True],
+        [8.0, 8.0, 0, True],
+        [9.0, 9.0, 0, True]
     ]
 
     # Mapa de rutas
@@ -63,12 +73,15 @@ def follow_route(route_number):
 
     # Sigue la ruta
     for point in route:
-        state = move_to_goal(client, point[0], point[1])
+        state = move_to_goal(client, point[0], point[1], point[2])
         print(state)
         if state != 3:  # 3 significa éxito en actionlib
             rospy.loginfo("Failed to reach the checkpoint.")
             break
         else:
             print("Checkpoint alcanzado")
-
-    rospy.loginfo("Ruta completada.")
+            # para usar puntos intermedios y que no haga paradas en esos puntos
+            if point[3]:
+            	time.sleep(5)
+    
+rospy.loginfo("Ruta completada.")
