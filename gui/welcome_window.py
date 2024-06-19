@@ -16,12 +16,12 @@ class WelcomeWindow(QMainWindow):
         # Set background color to a darker blue
         self.label = QLabel(self)
         self.label.setGeometry(0, 0, 1024, 600)
-        self.label.setStyleSheet("background-color: #2C3E50")  # Darker blue color
+        self.label.setStyleSheet("background-color: #003B73")  # Darker blue color
         self.label.setScaledContents(True)
 
         # Add the first logo
         self.logo1 = QLabel(self)
-        self.logo1.setGeometry(50, -200, 688, 688)  # Adjust size and position as needed
+        self.logo1.setGeometry(50, -180, 688, 688)  # Adjust size and position as needed
         pixmap1 = QPixmap(os.path.join(os.path.dirname(__file__), '../assets/login.png'))
         self.logo1.setPixmap(pixmap1)
         self.logo1.setScaledContents(True)

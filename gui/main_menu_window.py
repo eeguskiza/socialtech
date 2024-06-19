@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QMainWindow, QLabel, QVBoxLayout, QWidget, QHBoxLayout, QListWidget, QListWidgetItem, QStackedWidget, QSpacerItem, QSizePolicy, QPushButton, QComboBox
+from PyQt5.QtWidgets import QMainWindow, QLabel, QVBoxLayout, QWidget, QHBoxLayout, QListWidget, QListWidgetItem, QPushButton, QComboBox
 from PyQt5.QtCore import Qt
 from .default_routes_window import DefaultRoutesWindow
 from .custom_route_window import CustomRouteWindow
@@ -17,41 +17,42 @@ class MainMenuWindow(QMainWindow):
         self.setCentralWidget(self.central_widget)
 
         # Main layout
-        self.main_layout = QHBoxLayout(self.central_widget)
+        self.main_layout = QVBoxLayout(self.central_widget)
 
-        # Sidebar container
-        self.sidebar_container = QWidget(self)
-        self.sidebar_container.setFixedWidth(250)
-        self.sidebar_layout = QVBoxLayout(self.sidebar_container)
+        # Center container
+        self.center_container = QWidget(self)
+        self.center_container.setFixedWidth(700)
+        self.center_layout = QVBoxLayout(self.center_container)
 
         # Combo box for main menu options
         self.combo_box = QComboBox(self)
         self.combo_box.addItem("Rutas")
         self.combo_box.addItem("Cuadros")
         self.combo_box.addItem("Otros Ajustes")
-        self.combo_box.setFixedHeight(40)
+        self.combo_box.setFixedHeight(60)
+        self.combo_box.setStyleSheet("font-size: 18pt; font-weight: bold;")
         self.combo_box.currentIndexChanged.connect(self.update_list)
 
-        self.sidebar_layout.addWidget(self.combo_box)
+        self.center_layout.addWidget(self.combo_box)
 
         # List widget for sub-options
         self.sidebar_list = QListWidget(self)
         self.sidebar_list.setStyleSheet("""
             QListWidget {
-                font-size: 14pt;
+                font-size: 18pt;
                 font-weight: bold;
             }
             QListWidget::item {
-                height: 30px;
-                padding: 5px;
+                height: 50px;
+                padding: 10px;
             }
         """)
         self.update_list(0)  # Initialize with the first set of options
         self.sidebar_list.currentRowChanged.connect(self.display_content)
 
-        self.sidebar_layout.addWidget(self.sidebar_list)
+        self.center_layout.addWidget(self.sidebar_list)
 
-        self.main_layout.addWidget(self.sidebar_container)
+        self.main_layout.addWidget(self.center_container, alignment=Qt.AlignCenter)
 
         # Main content area
         self.content_area = QWidget(self)
@@ -59,14 +60,17 @@ class MainMenuWindow(QMainWindow):
         
         self.option_label = QLabel("Seleccione una opción del menú", self)
         self.option_label.setAlignment(Qt.AlignCenter)
+        self.option_label.setStyleSheet("font-size: 24pt; font-weight: bold;")
         self.content_layout.addWidget(self.option_label)
         
         self.intro_message = QLabel("", self)
         self.intro_message.setAlignment(Qt.AlignCenter)
+        self.intro_message.setStyleSheet("font-size: 18pt;")
         self.content_layout.addWidget(self.intro_message)
         
         self.vamos_button = QPushButton("¡Vamos!", self)
-        self.vamos_button.setFixedSize(100, 50)
+        self.vamos_button.setFixedSize(200, 100)
+        self.vamos_button.setStyleSheet("font-size: 18pt; font-weight: bold;")
         self.vamos_button.clicked.connect(self.navigate_to_option)
         self.content_layout.addWidget(self.vamos_button, alignment=Qt.AlignCenter)
 
