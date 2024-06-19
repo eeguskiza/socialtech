@@ -1,10 +1,10 @@
 import sys
 from PyQt5.QtWidgets import QApplication
-import rospy
+#import rospy
 from gui.welcome_window import WelcomeWindow
 
 def main():
-    rospy.init_node('route_follower', anonymous=True)
+    #rospy.init_node('route_follower', anonymous=True)
     app = QApplication(sys.argv)
     window = WelcomeWindow()
     window.show()

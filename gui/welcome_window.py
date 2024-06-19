@@ -13,19 +13,16 @@ class WelcomeWindow(QMainWindow):
         self.setGeometry(100, 100, 1024, 600)
         center_window(self)
 
-        # Set background image
+        # Set background color to a darker blue
         self.label = QLabel(self)
         self.label.setGeometry(0, 0, 1024, 600)
-        #pixmap = QPixmap(os.path.join(os.path.dirname(__file__), '../assets/mainMenu.webp'))
-        #self.label.setPixmap(pixmap)
-        #Fondo azul pastel
-        self.label.setStyleSheet("background-color: #AED6F1")
+        self.label.setStyleSheet("background-color: #2C3E50")  # Darker blue color
         self.label.setScaledContents(True)
 
-        # Add start button bold text
+        # Add start button with larger size and bold text
         self.start_button = QPushButton("Comenzar", self)
-        self.start_button.setStyleSheet("font: bold 20pt")
-        self.start_button.setGeometry(412, 400, 200, 50)
+        self.start_button.setStyleSheet("font: bold 24pt; height: 80px; width: 300px;")
+        self.start_button.setGeometry(362, 400, 300, 80)
         self.start_button.clicked.connect(self.start_button_clicked)
 
     def start_button_clicked(self):
